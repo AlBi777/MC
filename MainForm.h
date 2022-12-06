@@ -84,7 +84,7 @@ namespace MC {
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -411,6 +411,7 @@ namespace MC {
 			this->plus->TabIndex = 4;
 			this->plus->Text = L"+";
 			this->plus->UseVisualStyleBackColor = true;
+			this->plus->Click += gcnew System::EventHandler(this, &MainForm::plus_Click);
 			// 
 			// minus
 			// 
@@ -420,6 +421,7 @@ namespace MC {
 			this->minus->TabIndex = 5;
 			this->minus->Text = L"-";
 			this->minus->UseVisualStyleBackColor = true;
+			this->minus->Click += gcnew System::EventHandler(this, &MainForm::minus_Click);
 			// 
 			// multiply
 			// 
@@ -429,6 +431,7 @@ namespace MC {
 			this->multiply->TabIndex = 6;
 			this->multiply->Text = L"*";
 			this->multiply->UseVisualStyleBackColor = true;
+			this->multiply->Click += gcnew System::EventHandler(this, &MainForm::multiply_Click);
 			// 
 			// groupBox4
 			// 
@@ -489,7 +492,7 @@ namespace MC {
 		dataGridView1->RowCount = 0; A.row = 0;
 		dataGridView1->ColumnCount = 0; A.column = 0;
 	}
-	   // Для матрицы В
+		   // Для матрицы В
 	private: System::Void Create_B_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (B.row != 0 || B.column != 0) {
 			dataGridView2->RowCount = 0;
@@ -503,11 +506,79 @@ namespace MC {
 		dataGridView2->ColumnCount = 0; B.column = 0;
 
 	}
+		   // Для матрицы С
 	private: System::Void Delete_res_Click(System::Object^ sender, System::EventArgs^ e) {
 		dataGridView3->RowCount = 0; C.row = 0;
 		dataGridView3->ColumnCount = 0; C.column = 0;
 		ResA->Text = L""; ResB->Text = L"";
 		LA->Text = L"Результат для матрицы А :"; LB->Text = L"Результат для матрицы B :";
 	}
-};
+
+		   // Операции с двумя матрицами
+	private: System::Void plus_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (A.row == 0 || B.column == 0) { MessageBox::Show("Матрицы пусты", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+		if (A.row != B.row || B.column != A.column) { MessageBox::Show("Матрицы не подходят по условиям для операции!\nКоличество строк и столбцов матриц должны быть равны!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
+		if (C.row != 0 || C.column != 0) {
+			dataGridView3->RowCount = 0;
+			dataGridView3->ColumnCount = 0;
+		}
+		C = B;
+		dataGridView3->RowCount = C.row;
+		dataGridView3->ColumnCount = C.column;
+		
+		for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+			for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+				dataGridView3->Rows[i]->Cells[j]->Value = Convert::ToInt32(dataGridView1->Rows[i]->Cells[j]->Value) +Convert::ToInt32(dataGridView2->Rows[i]->Cells[j]->Value);
+			}
+		}
+	}
+	private: System::Void minus_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (A.row == 0 || B.column == 0) { MessageBox::Show("Матрицы пусты", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+		if (A.row != B.row || B.column != A.column) { MessageBox::Show("Матрицы не подходят по условиям для операции!\nКоличество строк и столбцов матриц должны быть равны!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
+		if (C.row != 0 || C.column != 0) {
+			dataGridView3->RowCount = 0;
+			dataGridView3->ColumnCount = 0;
+		}
+		C = B;
+		dataGridView3->RowCount = C.row;
+		dataGridView3->ColumnCount = C.column;
+
+		for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+			for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+				dataGridView3->Rows[i]->Cells[j]->Value = Convert::ToInt32(dataGridView1->Rows[i]->Cells[j]->Value) - Convert::ToInt32(dataGridView2->Rows[i]->Cells[j]->Value);
+			}
+		}
+	}
+	private: System::Void multiply_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (A.row == 0 || B.column == 0) { MessageBox::Show("Матрицы пусты", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+		if (A.row != B.column) { MessageBox::Show("Матрицы не подходят по условиям для операции!\nКоличество строк матрицы А = количество столбцов матрицы В!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
+	
+		if (C.row != 0 || C.column != 0) {
+			dataGridView3->RowCount = 0;
+			dataGridView3->ColumnCount = 0;
+		}
+		C.row = A.row;
+		C.column = B.column;
+		dataGridView3->RowCount = C.row;
+		dataGridView3->ColumnCount = C.column;
+
+		for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+			for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+				
+
+
+
+
+
+
+
+			}
+		}
+	
+	
+	
+	
+	
+	}
+	};
 }
