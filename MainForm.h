@@ -24,12 +24,12 @@ void GetMatr(double** mas, double** p, int i, int j, int m) {
 }
 
 // Рекурсивное вычисление определителя
-int det(double** mas, int m) {
-	int i,j, d, k, n;
-	double** p;
-	p = new double* [m];
+double det(double** mas, int m) {
+	int i, j, k, n; double d;
+	double** mx;
+	mx = new double* [m];
 	for (int i = 0; i < m; i++)
-		p[i] = new double[m];
+		mx[i] = new double[m];
 	j = 0; d = 0;
 	k = 1; //(-1) в степени i
 	n = m - 1;
@@ -44,9 +44,9 @@ int det(double** mas, int m) {
 	}
 	if (m > 2) {
 		for (int i = 0; i < m; i++) {
-			GetMatr(mas, p, i, 0, m);
+			GetMatr(mas, mx, i, 0, m);
 			
-			d += + k * mas[i][0] * det(p, n);
+			d += + k * mas[i][0] * det(mx, n);
 			k = -k;
 		}
 	}
@@ -176,6 +176,9 @@ namespace MC {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->инструкцияToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->оПрограммеToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -359,10 +362,22 @@ namespace MC {
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->dataGridView1->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
+			this->dataGridView1->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllHeaders;
+			dataGridViewCellStyle1->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle1->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			dataGridViewCellStyle1->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle1->Format = L"N2";
+			dataGridViewCellStyle1->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle1->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle1->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView1->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(6, 21);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->RowHeadersWidth = 51;
+			this->dataGridView1->RowHeadersWidth = 40;
 			this->dataGridView1->RowTemplate->Height = 24;
 			this->dataGridView1->Size = System::Drawing::Size(359, 222);
 			this->dataGridView1->TabIndex = 0;
@@ -445,10 +460,23 @@ namespace MC {
 			// 
 			this->dataGridView2->AllowUserToAddRows = false;
 			this->dataGridView2->AllowUserToDeleteRows = false;
+			this->dataGridView2->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
+			this->dataGridView2->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllHeaders;
+			dataGridViewCellStyle2->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle2->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			dataGridViewCellStyle2->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle2->Format = L"N2";
+			dataGridViewCellStyle2->NullValue = nullptr;
+			dataGridViewCellStyle2->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle2->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle2->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView2->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
 			this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView2->Location = System::Drawing::Point(6, 21);
 			this->dataGridView2->Name = L"dataGridView2";
-			this->dataGridView2->RowHeadersWidth = 51;
+			this->dataGridView2->RowHeadersWidth = 40;
 			this->dataGridView2->RowTemplate->Height = 24;
 			this->dataGridView2->Size = System::Drawing::Size(359, 222);
 			this->dataGridView2->TabIndex = 0;
@@ -514,10 +542,23 @@ namespace MC {
 			// 
 			this->dataGridView3->AllowUserToAddRows = false;
 			this->dataGridView3->AllowUserToDeleteRows = false;
+			this->dataGridView3->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::Fill;
+			this->dataGridView3->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllHeaders;
+			dataGridViewCellStyle3->Alignment = System::Windows::Forms::DataGridViewContentAlignment::MiddleLeft;
+			dataGridViewCellStyle3->BackColor = System::Drawing::SystemColors::Control;
+			dataGridViewCellStyle3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			dataGridViewCellStyle3->ForeColor = System::Drawing::SystemColors::WindowText;
+			dataGridViewCellStyle3->Format = L"N2";
+			dataGridViewCellStyle3->NullValue = nullptr;
+			dataGridViewCellStyle3->SelectionBackColor = System::Drawing::SystemColors::Highlight;
+			dataGridViewCellStyle3->SelectionForeColor = System::Drawing::SystemColors::HighlightText;
+			dataGridViewCellStyle3->WrapMode = System::Windows::Forms::DataGridViewTriState::True;
+			this->dataGridView3->ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this->dataGridView3->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView3->Location = System::Drawing::Point(6, 21);
 			this->dataGridView3->Name = L"dataGridView3";
-			this->dataGridView3->RowHeadersWidth = 51;
+			this->dataGridView3->RowHeadersWidth = 40;
 			this->dataGridView3->RowTemplate->Height = 24;
 			this->dataGridView3->Size = System::Drawing::Size(359, 222);
 			this->dataGridView3->TabIndex = 0;
@@ -661,6 +702,7 @@ namespace MC {
 			this->obrM_A->TabIndex = 7;
 			this->obrM_A->Text = L"Найти обратную матрицу";
 			this->obrM_A->UseVisualStyleBackColor = true;
+			this->obrM_A->Click += gcnew System::EventHandler(this, &MainForm::obrM_A_Click);
 			// 
 			// groupBox6
 			// 
@@ -823,12 +865,6 @@ namespace MC {
 		}
 #pragma endregion
 
-		
-
-
-
-
-
 		// Для матрицы А
 	private: System::Void Create_A_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (A.row != 0 || A.column != 0) {
@@ -964,10 +1000,10 @@ namespace MC {
 		ResA->Text = L""; ResB->Text = L"";
 		
 	}
-private: System::Void выходToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void выходToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	Close();
-}
-private: System::Void pow_a_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void pow_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 	if (A.column != A.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
 
@@ -1025,7 +1061,7 @@ private: System::Void pow_a_Click(System::Object^ sender, System::EventArgs^ e) 
 
 
 }
-private: System::Void pow_b_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void pow_b_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 	if (B.column != B.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
 
@@ -1084,7 +1120,7 @@ private: System::Void pow_b_Click(System::Object^ sender, System::EventArgs^ e) 
 
 
 }
-private: System::Void multiply_a_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void multiply_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 	
 	if (C.row != 0 || C.column != 0) {
@@ -1120,7 +1156,7 @@ private: System::Void multiply_a_Click(System::Object^ sender, System::EventArgs
 
 
 }
-private: System::Void multiply_b_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void multiply_b_Click(System::Object^ sender, System::EventArgs^ e) {
 
 	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 
@@ -1156,7 +1192,7 @@ private: System::Void multiply_b_Click(System::Object^ sender, System::EventArgs
 
 
 }
-private: System::Void Tr_a_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void Tr_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; }
 	
 	if (C.row != 0 || C.column != 0) { 
@@ -1191,7 +1227,7 @@ private: System::Void Tr_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 
 }
-private: System::Void tr_b_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void tr_b_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; }
 
 	if (C.row != 0 || C.column != 0) {
@@ -1229,7 +1265,7 @@ private: System::Void tr_b_Click(System::Object^ sender, System::EventArgs^ e) {
 
 
 }
-private: System::Void opr_a_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void opr_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 	if (A.column != A.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
 	
@@ -1250,11 +1286,7 @@ private: System::Void opr_a_Click(System::Object^ sender, System::EventArgs^ e) 
 	ResA->Text = Convert::ToString(det(mat, n));
 
 }
-	   
-
-
-
-private: System::Void opr_b_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void opr_b_Click(System::Object^ sender, System::EventArgs^ e) {
 
 	if (B.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 	if (B.column != B.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
@@ -1277,6 +1309,73 @@ private: System::Void opr_b_Click(System::Object^ sender, System::EventArgs^ e) 
 
 }
 
-}
+
+
+
+
+	private: System::Void obrM_A_Click(System::Object^ sender, System::EventArgs^ e) {
+
+		if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+		if (A.column != A.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
+
+		int n = A.column; // Cоздание динамеческого массива
+		double** mat, ** p;
+		mat = new double* [n];
+		for (int i = 0; i < n; i++) {
+			mat[i] = new double[n];
+		}
+		p = new double* [n];
+		for (int i = 0; i < n; i++)
+			p[i] = new double[n];
+		// Переправка данных
+		for (int i = 0; i < dataGridView1->Rows->Count; i++) {
+			for (int j = 0; j < dataGridView1->Columns->Count; j++) {
+				A.mat[i][j] = mat[i][j] = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value);
+			}
+		}
+
+
+		double detA = det(mat, n);
+
+		if (detA == 0){ MessageBox::Show("Матрица является вырожденной, \nт.е. её определить равен нулю!\nВырожденная матрица не имеет обратной.", "Внимание", MessageBoxButtons::OK); return; }
+		else{
+			
+			C.column = A.row;
+			C.row = A.column;
+			//Транспонирование
+			for (int i = 0; i < C.row; i++) {
+				for (int j = 0; j < C.column; j++) {
+					mat[i][j] = A.mat[j][i];
+				}
+			}
+			
+			for(int i=0;i<n;i++){
+				for (int j = 0; j < n; j++) {
+					GetMatr(mat, p,i, j, n);
+					C.mat[i][j] =pow(-1,i+j+2)* det(p, n - 1) / detA;
+
+
+				}
+			
+			}
+			dataGridView3->RowCount = C.row;
+			dataGridView3->ColumnCount = C.column;
+			for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+				for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+					dataGridView3->Rows[i]->Cells[j]->Value = C.mat[i][j];
+				}
+			}
+		
+		
+		
+		
+		
+		}
+
+
+
+
+
+	}
 };
 }
