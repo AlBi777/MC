@@ -179,6 +179,7 @@ namespace MC {
 			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle1 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle2 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->инструкцияToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->оПрограммеToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -742,6 +743,7 @@ namespace MC {
 			this->ObrM_B->TabIndex = 7;
 			this->ObrM_B->Text = L"Найти обратную матрицу";
 			this->ObrM_B->UseVisualStyleBackColor = true;
+			this->ObrM_B->Click += gcnew System::EventHandler(this, &MainForm::ObrM_B_Click);
 			// 
 			// pow_b
 			// 
@@ -832,6 +834,7 @@ namespace MC {
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->menuStrip1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"MainForm";
 			this->Text = L"Матричный калькулятор";
@@ -1377,5 +1380,62 @@ namespace MC {
 
 
 	}
+private: System::Void ObrM_B_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+	if (B.column != B.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы B!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
+
+	int n = B.column; // Cоздание динамеческого массива
+	double** mat, ** p;
+	mat = new double* [n];
+	for (int i = 0; i < n; i++) {
+		mat[i] = new double[n];
+	}
+	p = new double* [n];
+	for (int i = 0; i < n; i++)
+		p[i] = new double[n];
+	// Переправка данных
+	for (int i = 0; i < dataGridView2->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView2->Columns->Count; j++) {
+			B.mat[i][j] = mat[i][j] = Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
+		}
+	}
+
+
+	double detB = det(mat, n);
+
+	if (detB == 0) { MessageBox::Show("Матрица является вырожденной, \nт.е. её определить равен нулю!\nВырожденная матрица не имеет обратной.", "Внимание", MessageBoxButtons::OK); return; }
+	else {
+
+		C.column = B.row;
+		C.row = B.column;
+		//Транспонирование
+		for (int i = 0; i < C.row; i++) {
+			for (int j = 0; j < C.column; j++) {
+				mat[i][j] = B.mat[j][i];
+			}
+		}
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				GetMatr(mat, p, i, j, n);
+				C.mat[i][j] = pow(-1, i + j + 2) * det(p, n - 1) / detB;
+
+
+			}
+
+		}
+		dataGridView3->RowCount = C.row;
+		dataGridView3->ColumnCount = C.column;
+		for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+			for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+				dataGridView3->Rows[i]->Cells[j]->Value = C.mat[i][j];
+			}
+		}
+
+
+	}
+
+}
 };
 }
