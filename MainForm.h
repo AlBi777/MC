@@ -876,6 +876,13 @@ namespace MC {
 		}
 		dataGridView1->RowCount = A.row = Convert::ToInt32(numericUpDown1->Value);
 		dataGridView1->ColumnCount = A.column = Convert::ToInt32(numericUpDown2->Value);
+
+		for (int i = 0; i < dataGridView1->Rows->Count; i++) {
+			for (int j = 0; j < dataGridView1->Columns->Count; j++) {
+				dataGridView1->Rows[i]->Cells[j]->Value = 0;
+			}
+		}
+
 	}
 	private: System::Void Delete_A_Click(System::Object^ sender, System::EventArgs^ e) {
 		dataGridView1->RowCount = 0; A.row = 0;
@@ -889,6 +896,12 @@ namespace MC {
 		}
 		dataGridView2->RowCount = B.row = Convert::ToInt32(numericUpDown4->Value);
 		dataGridView2->ColumnCount = B.column = Convert::ToInt32(numericUpDown3->Value);
+
+		for (int i = 0; i < dataGridView2->Rows->Count; i++) {
+			for (int j = 0; j < dataGridView2->Columns->Count; j++) {
+				dataGridView2->Rows[i]->Cells[j]->Value = 0;
+			}
+		}
 	}
 	private: System::Void Delete_B_Click(System::Object^ sender, System::EventArgs^ e) {
 		dataGridView2->RowCount = 0; B.row = 0;
@@ -1311,11 +1324,6 @@ namespace MC {
 	ResB->Text = Convert::ToString(det(mat, n));
 
 }
-
-
-
-
-
 	private: System::Void obrM_A_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
@@ -1380,7 +1388,7 @@ namespace MC {
 
 
 	}
-private: System::Void ObrM_B_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void ObrM_B_Click(System::Object^ sender, System::EventArgs^ e) {
 
 	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 	if (B.column != B.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы B!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
