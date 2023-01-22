@@ -1,11 +1,57 @@
 #pragma once
 #define max 99
+#include <math.h>
 
 struct matrix {
 	int row = 0;
 	int column = 0;
-	int mat[max][max];
-}A,B,C;
+	double mat[max][max];
+}A,B,C,Dop;
+
+// Получение матрицы без i-й строки и j-го столбца
+void GetMatr(double** mas, double** p, int i, int j, int m) {
+	int di, dj;
+	di = 0;
+	for (int ki = 0; ki < m - 1; ki++) { // проверка индекса строки
+		if (ki == i) di = 1;
+		dj = 0;
+		for (int kj = 0; kj < m - 1; kj++) { // проверка индекса столбца
+			if (kj == j) dj = 1;
+			p[ki][kj] = mas[ki + di][kj + dj];
+		}
+	}
+
+}
+
+// Рекурсивное вычисление определителя
+int det(double** mas, int m) {
+	int i,j, d, k, n;
+	double** p;
+	p = new double* [m];
+	for (int i = 0; i < m; i++)
+		p[i] = new double[m];
+	j = 0; d = 0;
+	k = 1; //(-1) в степени i
+	n = m - 1;
+	
+	if (m == 1) {
+		d = mas[0][0];
+		return(d);
+	}
+	if (m == 2) {
+		d = mas[0][0] * mas[1][1] - (mas[1][0] * mas[0][1]);
+		return(d);
+	}
+	if (m > 2) {
+		for (int i = 0; i < m; i++) {
+			GetMatr(mas, p, i, 0, m);
+			
+			d += + k * mas[i][0] * det(p, n);
+			k = -k;
+		}
+	}
+	return(d);
+}
 
 
 
@@ -110,6 +156,7 @@ namespace MC {
 	private: System::Windows::Forms::NumericUpDown^ numericUpDown7;
 	private: System::Windows::Forms::NumericUpDown^ numericUpDown8;
 	private: System::Windows::Forms::Button^ multiply_b;
+	private: System::Windows::Forms::ToolStripMenuItem^ инструкцияToolStripMenuItem;
 
 
 
@@ -130,6 +177,7 @@ namespace MC {
 		void InitializeComponent(void)
 		{
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->инструкцияToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->оПрограммеToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->выходToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
@@ -162,20 +210,20 @@ namespace MC {
 			this->Delete_all = (gcnew System::Windows::Forms::Button());
 			this->groupBox5 = (gcnew System::Windows::Forms::GroupBox());
 			this->Tr_a = (gcnew System::Windows::Forms::Button());
-			this->pow_a = (gcnew System::Windows::Forms::Button());
-			this->numericUpDown6 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->numericUpDown5 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->multiply_a = (gcnew System::Windows::Forms::Button());
+			this->pow_a = (gcnew System::Windows::Forms::Button());
+			this->numericUpDown6 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->opr_a = (gcnew System::Windows::Forms::Button());
 			this->obrM_A = (gcnew System::Windows::Forms::Button());
 			this->groupBox6 = (gcnew System::Windows::Forms::GroupBox());
 			this->groupBox7 = (gcnew System::Windows::Forms::GroupBox());
 			this->ObrM_B = (gcnew System::Windows::Forms::Button());
+			this->pow_b = (gcnew System::Windows::Forms::Button());
+			this->numericUpDown7 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->opr_b = (gcnew System::Windows::Forms::Button());
 			this->groupBox8 = (gcnew System::Windows::Forms::GroupBox());
 			this->tr_b = (gcnew System::Windows::Forms::Button());
-			this->pow_b = (gcnew System::Windows::Forms::Button());
-			this->numericUpDown7 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->numericUpDown8 = (gcnew System::Windows::Forms::NumericUpDown());
 			this->multiply_b = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1->SuspendLayout();
@@ -191,27 +239,33 @@ namespace MC {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView3))->BeginInit();
 			this->groupBox4->SuspendLayout();
 			this->groupBox5->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown6))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown6))->BeginInit();
 			this->groupBox6->SuspendLayout();
 			this->groupBox7->SuspendLayout();
-			this->groupBox8->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown7))->BeginInit();
+			this->groupBox8->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown8))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// menuStrip1
 			// 
 			this->menuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
-				this->оПрограммеToolStripMenuItem,
-					this->выходToolStripMenuItem
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->инструкцияToolStripMenuItem,
+					this->оПрограммеToolStripMenuItem, this->выходToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(1251, 28);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
+			// 
+			// инструкцияToolStripMenuItem
+			// 
+			this->инструкцияToolStripMenuItem->Name = L"инструкцияToolStripMenuItem";
+			this->инструкцияToolStripMenuItem->Size = System::Drawing::Size(105, 24);
+			this->инструкцияToolStripMenuItem->Text = L"Инструкция";
 			// 
 			// оПрограммеToolStripMenuItem
 			// 
@@ -304,6 +358,7 @@ namespace MC {
 			// 
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->AllowUserToDeleteRows = false;
+			this->dataGridView1->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(6, 21);
 			this->dataGridView1->Name = L"dataGridView1";
@@ -417,7 +472,7 @@ namespace MC {
 			// 
 			this->Delete_res->Location = System::Drawing::Point(272, 250);
 			this->Delete_res->Name = L"Delete_res";
-			this->Delete_res->Size = System::Drawing::Size(96, 57);
+			this->Delete_res->Size = System::Drawing::Size(93, 57);
 			this->Delete_res->TabIndex = 5;
 			this->Delete_res->Text = L"Удалить";
 			this->Delete_res->UseVisualStyleBackColor = true;
@@ -522,50 +577,30 @@ namespace MC {
 			// groupBox5
 			// 
 			this->groupBox5->Controls->Add(this->Tr_a);
-			this->groupBox5->Controls->Add(this->pow_a);
-			this->groupBox5->Controls->Add(this->numericUpDown6);
 			this->groupBox5->Controls->Add(this->numericUpDown5);
 			this->groupBox5->Controls->Add(this->multiply_a);
 			this->groupBox5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->groupBox5->Location = System::Drawing::Point(12, 361);
 			this->groupBox5->Name = L"groupBox5";
-			this->groupBox5->Size = System::Drawing::Size(371, 114);
+			this->groupBox5->Size = System::Drawing::Size(371, 83);
 			this->groupBox5->TabIndex = 8;
 			this->groupBox5->TabStop = false;
 			this->groupBox5->Text = L"Дополнительные действия для матрицы А";
 			// 
 			// Tr_a
 			// 
-			this->Tr_a->Location = System::Drawing::Point(6, 78);
+			this->Tr_a->Location = System::Drawing::Point(6, 50);
 			this->Tr_a->Name = L"Tr_a";
 			this->Tr_a->Size = System::Drawing::Size(359, 23);
 			this->Tr_a->TabIndex = 4;
 			this->Tr_a->Text = L"Транспонировать матрицу А";
 			this->Tr_a->UseVisualStyleBackColor = true;
-			// 
-			// pow_a
-			// 
-			this->pow_a->Location = System::Drawing::Point(6, 49);
-			this->pow_a->Name = L"pow_a";
-			this->pow_a->Size = System::Drawing::Size(293, 23);
-			this->pow_a->TabIndex = 3;
-			this->pow_a->Text = L"Ввозвести матрицу в n-ую степень";
-			this->pow_a->UseVisualStyleBackColor = true;
-			this->pow_a->Click += gcnew System::EventHandler(this, &MainForm::pow_a_Click);
-			// 
-			// numericUpDown6
-			// 
-			this->numericUpDown6->Location = System::Drawing::Point(305, 50);
-			this->numericUpDown6->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 99, 0, 0, 0 });
-			this->numericUpDown6->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2, 0, 0, 0 });
-			this->numericUpDown6->Name = L"numericUpDown6";
-			this->numericUpDown6->Size = System::Drawing::Size(60, 22);
-			this->numericUpDown6->TabIndex = 2;
-			this->numericUpDown6->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2, 0, 0, 0 });
+			this->Tr_a->Click += gcnew System::EventHandler(this, &MainForm::Tr_a_Click);
 			// 
 			// numericUpDown5
 			// 
+			this->numericUpDown5->DecimalPlaces = 1;
 			this->numericUpDown5->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 65536 });
 			this->numericUpDown5->Location = System::Drawing::Point(305, 22);
 			this->numericUpDown5->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 999, 0, 0, 0 });
@@ -576,12 +611,37 @@ namespace MC {
 			// 
 			// multiply_a
 			// 
+			this->multiply_a->AccessibleDescription = L"";
+			this->multiply_a->AccessibleName = L"";
 			this->multiply_a->Location = System::Drawing::Point(6, 21);
 			this->multiply_a->Name = L"multiply_a";
 			this->multiply_a->Size = System::Drawing::Size(293, 23);
 			this->multiply_a->TabIndex = 0;
+			this->multiply_a->TabStop = false;
+			this->multiply_a->Tag = L"";
 			this->multiply_a->Text = L"Умножить матрицу на";
 			this->multiply_a->UseVisualStyleBackColor = true;
+			this->multiply_a->Click += gcnew System::EventHandler(this, &MainForm::multiply_a_Click);
+			// 
+			// pow_a
+			// 
+			this->pow_a->Location = System::Drawing::Point(6, 77);
+			this->pow_a->Name = L"pow_a";
+			this->pow_a->Size = System::Drawing::Size(293, 23);
+			this->pow_a->TabIndex = 3;
+			this->pow_a->Text = L"Ввозвести матрицу в n-ую степень";
+			this->pow_a->UseVisualStyleBackColor = true;
+			this->pow_a->Click += gcnew System::EventHandler(this, &MainForm::pow_a_Click);
+			// 
+			// numericUpDown6
+			// 
+			this->numericUpDown6->Location = System::Drawing::Point(305, 78);
+			this->numericUpDown6->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 99, 0, 0, 0 });
+			this->numericUpDown6->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2, 0, 0, 0 });
+			this->numericUpDown6->Name = L"numericUpDown6";
+			this->numericUpDown6->Size = System::Drawing::Size(60, 22);
+			this->numericUpDown6->TabIndex = 2;
+			this->numericUpDown6->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2, 0, 0, 0 });
 			// 
 			// opr_a
 			// 
@@ -591,6 +651,7 @@ namespace MC {
 			this->opr_a->TabIndex = 5;
 			this->opr_a->Text = L"Вычилить определитель";
 			this->opr_a->UseVisualStyleBackColor = true;
+			this->opr_a->Click += gcnew System::EventHandler(this, &MainForm::opr_a_Click);
 			// 
 			// obrM_A
 			// 
@@ -604,12 +665,14 @@ namespace MC {
 			// groupBox6
 			// 
 			this->groupBox6->Controls->Add(this->obrM_A);
+			this->groupBox6->Controls->Add(this->pow_a);
+			this->groupBox6->Controls->Add(this->numericUpDown6);
 			this->groupBox6->Controls->Add(this->opr_a);
 			this->groupBox6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->groupBox6->Location = System::Drawing::Point(12, 481);
+			this->groupBox6->Location = System::Drawing::Point(12, 450);
 			this->groupBox6->Name = L"groupBox6";
-			this->groupBox6->Size = System::Drawing::Size(371, 100);
+			this->groupBox6->Size = System::Drawing::Size(371, 131);
 			this->groupBox6->TabIndex = 9;
 			this->groupBox6->TabStop = false;
 			this->groupBox6->Text = L"Вычисления для матрицы А";
@@ -617,12 +680,14 @@ namespace MC {
 			// groupBox7
 			// 
 			this->groupBox7->Controls->Add(this->ObrM_B);
+			this->groupBox7->Controls->Add(this->pow_b);
+			this->groupBox7->Controls->Add(this->numericUpDown7);
 			this->groupBox7->Controls->Add(this->opr_b);
 			this->groupBox7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->groupBox7->Location = System::Drawing::Point(450, 481);
+			this->groupBox7->Location = System::Drawing::Point(456, 450);
 			this->groupBox7->Name = L"groupBox7";
-			this->groupBox7->Size = System::Drawing::Size(371, 100);
+			this->groupBox7->Size = System::Drawing::Size(371, 131);
 			this->groupBox7->TabIndex = 11;
 			this->groupBox7->TabStop = false;
 			this->groupBox7->Text = L"Вычисления для матрицы В";
@@ -636,43 +701,9 @@ namespace MC {
 			this->ObrM_B->Text = L"Найти обратную матрицу";
 			this->ObrM_B->UseVisualStyleBackColor = true;
 			// 
-			// opr_b
-			// 
-			this->opr_b->Location = System::Drawing::Point(6, 21);
-			this->opr_b->Name = L"opr_b";
-			this->opr_b->Size = System::Drawing::Size(359, 23);
-			this->opr_b->TabIndex = 5;
-			this->opr_b->Text = L"Вычилить определитель";
-			this->opr_b->UseVisualStyleBackColor = true;
-			// 
-			// groupBox8
-			// 
-			this->groupBox8->Controls->Add(this->tr_b);
-			this->groupBox8->Controls->Add(this->pow_b);
-			this->groupBox8->Controls->Add(this->numericUpDown7);
-			this->groupBox8->Controls->Add(this->numericUpDown8);
-			this->groupBox8->Controls->Add(this->multiply_b);
-			this->groupBox8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->groupBox8->Location = System::Drawing::Point(450, 361);
-			this->groupBox8->Name = L"groupBox8";
-			this->groupBox8->Size = System::Drawing::Size(371, 114);
-			this->groupBox8->TabIndex = 10;
-			this->groupBox8->TabStop = false;
-			this->groupBox8->Text = L"Дополнительные действия для матрицы В";
-			// 
-			// tr_b
-			// 
-			this->tr_b->Location = System::Drawing::Point(6, 78);
-			this->tr_b->Name = L"tr_b";
-			this->tr_b->Size = System::Drawing::Size(359, 23);
-			this->tr_b->TabIndex = 4;
-			this->tr_b->Text = L"Транспонировать матрицу В";
-			this->tr_b->UseVisualStyleBackColor = true;
-			// 
 			// pow_b
 			// 
-			this->pow_b->Location = System::Drawing::Point(6, 49);
+			this->pow_b->Location = System::Drawing::Point(6, 77);
 			this->pow_b->Name = L"pow_b";
 			this->pow_b->Size = System::Drawing::Size(293, 23);
 			this->pow_b->TabIndex = 3;
@@ -682,7 +713,7 @@ namespace MC {
 			// 
 			// numericUpDown7
 			// 
-			this->numericUpDown7->Location = System::Drawing::Point(305, 50);
+			this->numericUpDown7->Location = System::Drawing::Point(305, 78);
 			this->numericUpDown7->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 99, 0, 0, 0 });
 			this->numericUpDown7->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2, 0, 0, 0 });
 			this->numericUpDown7->Name = L"numericUpDown7";
@@ -690,8 +721,43 @@ namespace MC {
 			this->numericUpDown7->TabIndex = 2;
 			this->numericUpDown7->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) { 2, 0, 0, 0 });
 			// 
+			// opr_b
+			// 
+			this->opr_b->Location = System::Drawing::Point(6, 21);
+			this->opr_b->Name = L"opr_b";
+			this->opr_b->Size = System::Drawing::Size(359, 23);
+			this->opr_b->TabIndex = 5;
+			this->opr_b->Text = L"Вычилить определитель";
+			this->opr_b->UseVisualStyleBackColor = true;
+			this->opr_b->Click += gcnew System::EventHandler(this, &MainForm::opr_b_Click);
+			// 
+			// groupBox8
+			// 
+			this->groupBox8->Controls->Add(this->tr_b);
+			this->groupBox8->Controls->Add(this->numericUpDown8);
+			this->groupBox8->Controls->Add(this->multiply_b);
+			this->groupBox8->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 7.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->groupBox8->Location = System::Drawing::Point(450, 361);
+			this->groupBox8->Name = L"groupBox8";
+			this->groupBox8->Size = System::Drawing::Size(371, 83);
+			this->groupBox8->TabIndex = 10;
+			this->groupBox8->TabStop = false;
+			this->groupBox8->Text = L"Дополнительные действия для матрицы В";
+			// 
+			// tr_b
+			// 
+			this->tr_b->Location = System::Drawing::Point(6, 50);
+			this->tr_b->Name = L"tr_b";
+			this->tr_b->Size = System::Drawing::Size(359, 23);
+			this->tr_b->TabIndex = 4;
+			this->tr_b->Text = L"Транспонировать матрицу В";
+			this->tr_b->UseVisualStyleBackColor = true;
+			this->tr_b->Click += gcnew System::EventHandler(this, &MainForm::tr_b_Click);
+			// 
 			// numericUpDown8
 			// 
+			this->numericUpDown8->DecimalPlaces = 1;
 			this->numericUpDown8->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 1, 0, 0, 65536 });
 			this->numericUpDown8->Location = System::Drawing::Point(305, 22);
 			this->numericUpDown8->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 999, 0, 0, 0 });
@@ -708,6 +774,7 @@ namespace MC {
 			this->multiply_b->TabIndex = 0;
 			this->multiply_b->Text = L"Умножить матрицу на";
 			this->multiply_b->UseVisualStyleBackColor = true;
+			this->multiply_b->Click += gcnew System::EventHandler(this, &MainForm::multiply_b_Click);
 			// 
 			// MainForm
 			// 
@@ -743,12 +810,12 @@ namespace MC {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView3))->EndInit();
 			this->groupBox4->ResumeLayout(false);
 			this->groupBox5->ResumeLayout(false);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown6))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown5))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown6))->EndInit();
 			this->groupBox6->ResumeLayout(false);
 			this->groupBox7->ResumeLayout(false);
-			this->groupBox8->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown7))->EndInit();
+			this->groupBox8->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown8))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -756,14 +823,7 @@ namespace MC {
 		}
 #pragma endregion
 
-
-
-
-
-
-
-
-
+		
 
 
 
@@ -817,7 +877,7 @@ namespace MC {
 
 		for (int i = 0; i < dataGridView3->Rows->Count; i++) {
 			for (int j = 0; j < dataGridView3->Columns->Count; j++) {
-				dataGridView3->Rows[i]->Cells[j]->Value = Convert::ToInt32(dataGridView1->Rows[i]->Cells[j]->Value) + Convert::ToInt32(dataGridView2->Rows[i]->Cells[j]->Value);
+				dataGridView3->Rows[i]->Cells[j]->Value = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value) + Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
 			}
 		}
 	}
@@ -834,7 +894,7 @@ namespace MC {
 
 		for (int i = 0; i < dataGridView3->Rows->Count; i++) {
 			for (int j = 0; j < dataGridView3->Columns->Count; j++) {
-				dataGridView3->Rows[i]->Cells[j]->Value = Convert::ToInt32(dataGridView1->Rows[i]->Cells[j]->Value) - Convert::ToInt32(dataGridView2->Rows[i]->Cells[j]->Value);
+				dataGridView3->Rows[i]->Cells[j]->Value = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value) - Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
 			}
 		}
 	}
@@ -856,12 +916,12 @@ namespace MC {
 		// Запись в 2-мерные массивы из таблиц
 		for (int i = 0; i < dataGridView1->Rows->Count; i++) {
 			for (int j = 0; j < dataGridView1->Columns->Count; j++) {
-				A.mat[i][j] = Convert::ToInt32(dataGridView1->Rows[i]->Cells[j]->Value);
+				A.mat[i][j] = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value);
 			}
 		}
 		for (int i = 0; i < dataGridView2->Rows->Count; i++) {
 			for (int j = 0; j < dataGridView2->Columns->Count; j++) {
-				B.mat[i][j] = Convert::ToInt32(dataGridView2->Rows[i]->Cells[j]->Value);
+				B.mat[i][j] = Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
 			}
 		}
 		// Очистка
@@ -919,12 +979,12 @@ private: System::Void pow_a_Click(System::Object^ sender, System::EventArgs^ e) 
 	C = A;
 	dataGridView3->RowCount = C.row;
 	dataGridView3->ColumnCount = C.column;
-	int t = A.column;
+	int t = C.row;
 
 	// Запись в 2-мерные массивы из таблиц
 	for (int i = 0; i < dataGridView1->Rows->Count; i++) {
 		for (int j = 0; j < dataGridView1->Columns->Count; j++) {
-			A.mat[i][j] = Convert::ToInt32(dataGridView1->Rows[i]->Cells[j]->Value);
+			A.mat[i][j] = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value);
 		}
 	}
 	// Очистка
@@ -935,13 +995,13 @@ private: System::Void pow_a_Click(System::Object^ sender, System::EventArgs^ e) 
 	}
 	// Ввозведение в степень
 	int st = Convert::ToInt32(numericUpDown6->Value);
-	B = A;
+	Dop = A;
 	for (int step = 1; step < st; step++) {
 
 		for (int i = 0; i < C.row; i++) {
 			for (int j = 0; j < C.column; j++) {
 				for (int k = 0; k < t; k++) {
-					C.mat[i][j] += A.mat[i][k] * B.mat[k][j];
+					C.mat[i][j] += A.mat[i][k] * Dop.mat[k][j];
 				}
 			}
 		}
@@ -982,7 +1042,7 @@ private: System::Void pow_b_Click(System::Object^ sender, System::EventArgs^ e) 
 	// Запись в 2-мерные массив из таблицы
 	for (int i = 0; i < dataGridView2->Rows->Count; i++) {
 		for (int j = 0; j < dataGridView2->Columns->Count; j++) {
-			B.mat[i][j] = Convert::ToInt32(dataGridView2->Rows[i]->Cells[j]->Value);
+			B.mat[i][j] = Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
 		}
 	}
 	// Очистка
@@ -993,13 +1053,13 @@ private: System::Void pow_b_Click(System::Object^ sender, System::EventArgs^ e) 
 	}
 	// Ввозведение в степень
 	int st = Convert::ToInt32(numericUpDown7->Value);
-	A = B;
+	Dop = B;
 	for (int step = 1; step < st; step++) {
 
 		for (int i = 0; i < C.row; i++) {
 			for (int j = 0; j < C.column; j++) {
 				for (int k = 0; k < t; k++) {
-					C.mat[i][j] += B.mat[i][k] * A.mat[k][j];
+					C.mat[i][j] += B.mat[i][k] * Dop.mat[k][j];
 				}
 			}
 		}
@@ -1022,6 +1082,200 @@ private: System::Void pow_b_Click(System::Object^ sender, System::EventArgs^ e) 
 
 
 
+
+}
+private: System::Void multiply_a_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+	
+	if (C.row != 0 || C.column != 0) {
+		dataGridView3->RowCount = 0;
+		dataGridView3->ColumnCount = 0;
+	}
+
+	// Запись в 2-мерные массивы из таблиц
+	for (int i = 0; i < dataGridView1->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView1->Columns->Count; j++) {
+			A.mat[i][j] = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value);
+		}
+	}
+
+	C = A; // copy
+	dataGridView3->RowCount = C.row;
+	dataGridView3->ColumnCount = C.column;
+
+	// Умножение
+	for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+			C.mat[i][j] *= Convert::ToDouble(numericUpDown5->Value);
+		}
+	}
+
+	//Вывод
+	for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+			dataGridView3->Rows[i]->Cells[j]->Value = C.mat[i][j];
+		}
+	}
+
+
+
+}
+private: System::Void multiply_b_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+
+	if (C.row != 0 || C.column != 0) {
+		dataGridView3->RowCount = 0;
+		dataGridView3->ColumnCount = 0;
+	}
+
+	// Запись в 2-мерные массивы из таблиц
+	for (int i = 0; i < dataGridView2->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView2->Columns->Count; j++) {
+			B.mat[i][j] = Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
+		}
+	}
+
+	C = B; // copy
+	dataGridView3->RowCount = C.row;
+	dataGridView3->ColumnCount = C.column;
+
+	// Умножение
+	for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+			C.mat[i][j] *= Convert::ToDouble(numericUpDown8->Value);
+		}
+	}
+
+	//Вывод
+	for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+			dataGridView3->Rows[i]->Cells[j]->Value = C.mat[i][j];
+		}
+	}
+
+
+}
+private: System::Void Tr_a_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; }
+	
+	if (C.row != 0 || C.column != 0) { 
+		dataGridView3->RowCount = 0;
+		dataGridView3->ColumnCount = 0;
+	}
+
+	// Запись в 2-мерные массивы из таблиц
+	for (int i = 0; i < dataGridView1->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView1->Columns->Count; j++) {
+			A.mat[i][j] = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value);
+		}
+	}
+
+	C.column = A.row;
+	C.row = A.column;
+	dataGridView3->RowCount = C.row;
+	dataGridView3->ColumnCount = C.column;
+	//Транспонирование
+	
+	for (int i = 0; i < C.row; i++) {
+		for (int j = 0; j < C.column; j++) {
+			C.mat[i][j] = A.mat[j][i];
+		}
+	}
+
+	// Вывод
+	for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+			dataGridView3->Rows[i]->Cells[j]->Value = C.mat[i][j];
+		}
+	}
+
+}
+private: System::Void tr_b_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; }
+
+	if (C.row != 0 || C.column != 0) {
+		dataGridView3->RowCount = 0;
+		dataGridView3->ColumnCount = 0;
+	}
+
+	// Запись в 2-мерные массивы из таблиц
+	for (int i = 0; i < dataGridView2->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView2->Columns->Count; j++) {
+			B.mat[i][j] = Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
+		}
+	}
+
+	C.column = B.row;
+	C.row = B.column;
+	dataGridView3->RowCount = C.row;
+	dataGridView3->ColumnCount = C.column;
+	//Транспонирование
+
+	for (int i = 0; i < C.row; i++) {
+		for (int j = 0; j < C.column; j++) {
+			C.mat[i][j] = B.mat[j][i];
+		}
+	}
+
+	// Вывод
+	for (int i = 0; i < dataGridView3->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView3->Columns->Count; j++) {
+			dataGridView3->Rows[i]->Cells[j]->Value = C.mat[i][j];
+		}
+	}
+
+
+
+
+}
+private: System::Void opr_a_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (A.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+	if (A.column != A.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
+	
+	int n = A.column; // Cоздание динамеческого массива
+	double** mat;
+	mat = new double*[n];
+	for (int i = 0; i < n; i++) {
+		mat[i] = new double [n];
+	}
+	// Переправка данных
+	for (int i = 0; i < dataGridView1->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView1->Columns->Count; j++) {
+			mat[i][j] = Convert::ToDouble(dataGridView1->Rows[i]->Cells[j]->Value);
+		}
+	}
+	
+	
+	ResA->Text = Convert::ToString(det(mat, n));
+
+}
+	   
+
+
+
+private: System::Void opr_b_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (B.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+	if (B.column != B.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
+
+	int n = B.column; // Cоздание динамеческого массива
+	double** mat;
+	mat = new double* [n];
+	for (int i = 0; i < n; i++) {
+		mat[i] = new double[n];
+	}
+	// Переправка данных
+	for (int i = 0; i < dataGridView2->Rows->Count; i++) {
+		for (int j = 0; j < dataGridView2->Columns->Count; j++) {
+			mat[i][j] = Convert::ToDouble(dataGridView2->Rows[i]->Cells[j]->Value);
+		}
+	}
+
+
+	ResB->Text = Convert::ToString(det(mat, n));
+
+}
 
 }
 };
