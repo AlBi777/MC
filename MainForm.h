@@ -1,6 +1,9 @@
+
 #pragma once
 #define max 99
 #include <math.h>
+#include <Windows.h>
+#include "info.h"
 
 struct matrix {
 	int row = 0;
@@ -261,20 +264,21 @@ namespace MC {
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1251, 28);
+			this->menuStrip1->Size = System::Drawing::Size(1251, 30);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
 			// ñïðàâêàToolStripMenuItem
 			// 
 			this->ñïðàâêàToolStripMenuItem->Name = L"ñïðàâêàToolStripMenuItem";
-			this->ñïðàâêàToolStripMenuItem->Size = System::Drawing::Size(81, 24);
+			this->ñïðàâêàToolStripMenuItem->Size = System::Drawing::Size(81, 26);
 			this->ñïðàâêàToolStripMenuItem->Text = L"Ñïðàâêà";
+			this->ñïðàâêàToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::ñïðàâêàToolStripMenuItem_Click);
 			// 
 			// âûõîäToolStripMenuItem
 			// 
 			this->âûõîäToolStripMenuItem->Name = L"âûõîäToolStripMenuItem";
-			this->âûõîäToolStripMenuItem->Size = System::Drawing::Size(67, 24);
+			this->âûõîäToolStripMenuItem->Size = System::Drawing::Size(67, 26);
 			this->âûõîäToolStripMenuItem->Text = L"Âûõîä";
 			this->âûõîäToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::âûõîäToolStripMenuItem_Click);
 			// 
@@ -996,8 +1000,6 @@ namespace MC {
 
 		
 	}
-	
-	
 	private: System::Void Delete_all_Click(System::Object^ sender, System::EventArgs^ e) {
 		// Ïîëíàÿ î÷èñòêà èíô. ïîëåé
 		dataGridView1->RowCount = 0; A.row = 0; // A
@@ -1011,9 +1013,9 @@ namespace MC {
 		ResA->Text = L""; ResB->Text = L"";
 		
 	}
-	private: System::Void âûõîäToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	Close();
-	}
+	
+	
+	//Âîçâåäåíèå ìàòðèö â ñòåïåíü n
 	private: System::Void pow_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Ìàòðèöà ïóñòà", "Âíèìàíèå", MessageBoxButtons::OK); return; } // Åñëè ìàòðèöû ïóñòû
 	if (A.column != A.row) { MessageBox::Show("Ìàòðèöà íå ïîäõîäèò ïî óñëîâèÿì äëÿ îïåðàöèè!\nÊîëè÷åñòâî ñòîëáöîâ = êîëè÷åñòâî ñòðîê ìàòðèöû À!", "Âíèìàíèå", MessageBoxButtons::OK); return; } // Åñëè ìàòðèöû íå ïîäõîäÿò ïî óñëîâèÿì
@@ -1131,6 +1133,7 @@ namespace MC {
 
 
 }
+	// Óìíîæåíèå íà n
 	private: System::Void multiply_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Ìàòðèöà ïóñòà", "Âíèìàíèå", MessageBoxButtons::OK); return; } // Åñëè ìàòðèöû ïóñòû
 	
@@ -1200,9 +1203,8 @@ namespace MC {
 			dataGridView3->Rows[i]->Cells[j]->Value = C.mat[i][j];
 		}
 	}
-
-
 }
+	//Òðàíñïîíèðîâàíèå
 	private: System::Void Tr_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Ìàòðèöà ïóñòà", "Âíèìàíèå", MessageBoxButtons::OK); return; }
 	
@@ -1276,6 +1278,7 @@ namespace MC {
 
 
 }
+	//Âû÷èñëåíèå îïðåäåëèòåëÿ
 	private: System::Void opr_a_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (A.row == 0 || A.column == 0) { MessageBox::Show("Ìàòðèöà ïóñòà", "Âíèìàíèå", MessageBoxButtons::OK); return; } // Åñëè ìàòðèöû ïóñòû
 	if (A.column != A.row) { MessageBox::Show("Ìàòðèöà íå ïîäõîäèò ïî óñëîâèÿì äëÿ îïåðàöèè!\nÊîëè÷åñòâî ñòîëáöîâ = êîëè÷åñòâî ñòðîê ìàòðèöû À!", "Âíèìàíèå", MessageBoxButtons::OK); return; } // Åñëè ìàòðèöû íå ïîäõîäÿò ïî óñëîâèÿì
@@ -1319,6 +1322,7 @@ namespace MC {
 	ResB->Text = Convert::ToString(det(mat, n));
 
 }
+	//Âû÷èñëåíèå îáðàòíîé ìàòðèöû
 	private: System::Void obrM_A_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		if (A.row == 0 || A.column == 0) { MessageBox::Show("Ìàòðèöà ïóñòà", "Âíèìàíèå", MessageBoxButtons::OK); return; } // Åñëè ìàòðèöû ïóñòû
@@ -1438,6 +1442,17 @@ namespace MC {
 
 
 	}
+
+}
+	// Íå äëÿ ìàòðèö
+	private: System::Void âûõîäToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		Close();
+	}
+	private: System::Void ñïðàâêàToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		info^ inf = gcnew info;
+		inf->Show();
+
+
 
 }
 };

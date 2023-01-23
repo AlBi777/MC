@@ -117,6 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>Матричный калькулятор
+
+Автор программы: Биперт А.Е.
+гр. ПИ-12, АлтГТУ 2022
+
+Программа представляет возможность работать с одной или двумя матрицами и соврешать операции:
+    • Умножение матриц
+    • Сложение матриц
+    • Вычитание матриц
+    • Возведение в степень матрицы
+    • Вычисление определителя матрицы
+    • Транспонирование матрицы
+    • Умножение матрицы на число
+    • Нахождение обратной матрицы
+
+Матрицы можно создать с размерностью от 1 до 32.
+Матрицу можно умножить на числа с -999 до 999 с шагом 0.1
+Клавиши "удалить" очищают поля рядом с собой, а кнопка "Очистить" очищает поля матриц и результатов 
+
+
+</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

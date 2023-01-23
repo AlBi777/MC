@@ -1,5 +1,4 @@
 #pragma once
-
 namespace MC {
 
 	using namespace System;
@@ -34,6 +33,8 @@ namespace MC {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::TextBox^ textBox1;
+	protected:
 
 	private:
 		/// <summary>
@@ -49,18 +50,33 @@ namespace MC {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(info::typeid));
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
+			// 
+			// textBox1
+			// 
+			this->textBox1->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->textBox1->Location = System::Drawing::Point(0, 0);
+			this->textBox1->Multiline = true;
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->ReadOnly = true;
+			this->textBox1->ScrollBars = System::Windows::Forms::ScrollBars::Both;
+			this->textBox1->Size = System::Drawing::Size(471, 438);
+			this->textBox1->TabIndex = 0;
+			this->textBox1->Text = resources->GetString(L"textBox1.Text");
 			// 
 			// info
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(471, 438);
+			this->Controls->Add(this->textBox1);
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"info";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Сравка";
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion

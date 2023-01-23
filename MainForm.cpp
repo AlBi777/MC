@@ -1,15 +1,12 @@
 #include "MainForm.h" 
-
+#include <Windows.h>
 using namespace System;
 using namespace System::Windows::Forms;
-
+using namespace MC; // Название проекта
 [STAThreadAttribute]
-
-void main() {
-
+int  main() {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-
-	MC::MainForm form;
-	Application::Run(% form);
+	Application::Run(gcnew MainForm);
+	return 0;
 }
