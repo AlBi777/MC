@@ -91,7 +91,7 @@ namespace MC {
 		}
 	private: System::Windows::Forms::MenuStrip^ menuStrip1;
 	protected:
-	private: System::Windows::Forms::ToolStripMenuItem^ оПрограммеToolStripMenuItem;
+
 	private: System::Windows::Forms::ToolStripMenuItem^ выходToolStripMenuItem;
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::GroupBox^ groupBox2;
@@ -156,7 +156,8 @@ namespace MC {
 	private: System::Windows::Forms::NumericUpDown^ numericUpDown7;
 	private: System::Windows::Forms::NumericUpDown^ numericUpDown8;
 	private: System::Windows::Forms::Button^ multiply_b;
-	private: System::Windows::Forms::ToolStripMenuItem^ инструкцияToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ справкаToolStripMenuItem;
+
 
 
 
@@ -181,8 +182,7 @@ namespace MC {
 			System::Windows::Forms::DataGridViewCellStyle^ dataGridViewCellStyle3 = (gcnew System::Windows::Forms::DataGridViewCellStyle());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
-			this->инструкцияToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->оПрограммеToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->справкаToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->выходToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -255,9 +255,9 @@ namespace MC {
 			// menuStrip1
 			// 
 			this->menuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
-				this->инструкцияToolStripMenuItem,
-					this->оПрограммеToolStripMenuItem, this->выходToolStripMenuItem
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->справкаToolStripMenuItem,
+					this->выходToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
@@ -265,17 +265,11 @@ namespace MC {
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
-			// инструкцияToolStripMenuItem
+			// справкаToolStripMenuItem
 			// 
-			this->инструкцияToolStripMenuItem->Name = L"инструкцияToolStripMenuItem";
-			this->инструкцияToolStripMenuItem->Size = System::Drawing::Size(105, 24);
-			this->инструкцияToolStripMenuItem->Text = L"Инструкция";
-			// 
-			// оПрограммеToolStripMenuItem
-			// 
-			this->оПрограммеToolStripMenuItem->Name = L"оПрограммеToolStripMenuItem";
-			this->оПрограммеToolStripMenuItem->Size = System::Drawing::Size(118, 24);
-			this->оПрограммеToolStripMenuItem->Text = L"О программе";
+			this->справкаToolStripMenuItem->Name = L"справкаToolStripMenuItem";
+			this->справкаToolStripMenuItem->Size = System::Drawing::Size(81, 24);
+			this->справкаToolStripMenuItem->Text = L"Справка";
 			// 
 			// выходToolStripMenuItem
 			// 
@@ -837,6 +831,7 @@ namespace MC {
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"MainForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Матричный калькулятор";
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
@@ -1304,7 +1299,7 @@ namespace MC {
 }
 	private: System::Void opr_b_Click(System::Object^ sender, System::EventArgs^ e) {
 
-	if (B.row == 0 || A.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
+	if (B.row == 0 || B.column == 0) { MessageBox::Show("Матрица пуста", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы пусты
 	if (B.column != B.row) { MessageBox::Show("Матрица не подходит по условиям для операции!\nКоличество столбцов = количество строк матрицы А!", "Внимание", MessageBoxButtons::OK); return; } // Если матрицы не подходят по условиям
 
 	int n = B.column; // Cоздание динамеческого массива
