@@ -15,9 +15,9 @@ public:
 	matrix(int i, int j);
 	~matrix();
 public:
-	void multiply(matrix first,matrix second); A*B
-	void multiply(matrix mat, int n);A^N
-	void multiply(matrix mat, double x);A*X
+	void multiply(matrix first,matrix second); //A*B
+	void multiply(matrix mat, int n);//A^N
+	void multiply(matrix mat, double x);//A*X
 	void copy(matrix x);
 	void plus(matrix a, matrix b);
 	void minus(matrix a, matrix b);
